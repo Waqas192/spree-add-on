@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "spec_helper"
 
-describe Spree::AddOnPrice do
+describe Spree::AddOnPrice, type: :model do
   let(:add_on_price) { Spree::AddOnPrice.new }
   subject { add_on_price }
 

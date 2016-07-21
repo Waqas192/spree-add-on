@@ -3,9 +3,7 @@ $zindexModal: 2;
 $white: white;
 $black: black;
 
-@import 'bootstrap/mixins';
-@import 'bootstrap/modals';
-@import 'store/variables';
+@import 'bootstrap';
 
 .pull-right {
   float: right;
@@ -30,7 +28,7 @@ $black: black;
 .add-on-amount {
   vertical-align: bottom;
   font-weight: bold;
-  color: $link_text_color;
+  color: $link-color;
 }
 
 .add-on-info {
@@ -56,4 +54,3 @@ $black: black;
     text-decoration: line-through;
   }
 }
-

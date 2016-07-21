@@ -1,4 +1,4 @@
-require 'durable_decorator'
+require "durable_decorator"
 
 module Spree
   LineItem.class_eval do
@@ -6,11 +6,10 @@ module Spree
     has_many :add_ons, through: :line_item_add_ons
 
     after_create :add_default_add_ons
-    attr_accessible :add_on_ids
 
     meta = {
-      mode: 'strict',
-      sha: '7b3df3d93294ddec78f32d1c4110d87aad7afb39'
+      mode: "strict",
+      sha: "7b3df3d93294ddec78f32d1c4110d87aad7afb39"
     }
 
     durably_decorate :amount, meta do
@@ -34,6 +33,7 @@ module Spree
     end
 
     private
+
     def add_on_amount
       line_item_add_ons.map do |line_item_add_on|
         line_item_add_on.price || 0

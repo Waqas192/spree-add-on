@@ -1,26 +1,29 @@
 <% random = Random.rand(10000)%>
-<%= content_tag( :div, id: "modal-#{random}-#{add_on.hash}", class: 'modal hide fade', tabindex: -1, role: 'dialog', 'aria-hidden'=>true) do %>
-  <div class="modal-header">
-    <button type="button" class="pull-right close" data-dismiss="modal" aria-hidden="true">x</button>
-    <h3><%= add_on.name %></h3>
-  </div>
-  <div class="modal-body">
-    <p><%= add_on.description %></p>
-    <p>
-      <div>
-        <strong><%= I18n.t('spree.addons.cost') %>:</strong> <%= add_on.price_in(current_currency).display_amount %>
-      </div>
-      <% if add_on.expiration_days %>
+<%= content_tag( :div, id: "modal-#{random}-#{add_on.hash}", class: 'modal fade', tabindex: -1, role: 'dialog', 'aria-hidden'=>true) do %>
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="pull-right close" data-dismiss="modal" aria-hidden="true">x</button>
+      <h3><%= add_on.name %></h3>
+    </div>
+    <div class="modal-body">
+      <p><%= add_on.description %></p>
+      <p>
         <div>
-          <strong><%= I18n.t('spree.addons.expires') %>:</strong> <%= l(DateTime.now + add_on.expiration_days.days, format: :long) %>
+          <strong><%= I18n.t('spree.addons.cost') %>:</strong> <%= add_on.price_in(current_currency).display_amount %>
         </div>
-      <% end %>
-    </p>
+        <% if add_on.expiration_days %>
+          <div>
+            <strong><%= I18n.t('spree.addons.expires') %>:</strong> <%= l(DateTime.now + add_on.expiration_days.days, format: :long) %>
+          </div>
+        <% end %>
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="pull-right close" data-dismiss="modal" aria-hidden="true"><%= I18n.t(:close) %></button>
+    </div>
   </div>
-  <div class="modal-footer">
-    <button type="button" class="pull-right close" data-dismiss="modal" aria-hidden="true"><%= I18n.t(:close) %></button>
-  </div>
-  <div></div>
+</div>
 <% end %>
 
 <%= link_to("#modal-#{random}-#{add_on.hash}", class: :btn, data: { toggle: 'modal' }) do %>

@@ -15,3 +15,10 @@ Deface::Override.new(
   sequence: 101
 )
 
+Deface::Override.new(
+  virtual_path: 'spree/checkout/_delivery',
+  name: 'delivery_add_on_prices',
+  replace_contents: '.item-price',
+  text: '<%= item.line_item.single_money_with_add_ons %>',
+  disabled: false
+)
