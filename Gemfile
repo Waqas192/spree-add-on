@@ -7,11 +7,11 @@ gem "spree_auth_devise", "~> 3.1.0"
 gem "spree", "~> 3.1.0"
 
 group :development, :test do
-  gem "fuubar"
   gem "pry"
 end
 
 group :test do
+  gem 'rspec-rails', '~> 3.5'
   gem "shoulda-matchers"
   gem "rspec-activemodel-mocks"
   gem "rspec-its"
