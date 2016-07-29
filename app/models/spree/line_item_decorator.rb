@@ -25,11 +25,11 @@ module Spree
     end
 
     def name
-      read_attribute(:name) || variant.name
+      self[:name] || variant.name
     end
 
     def description
-      read_attribute(:description) || variant.description
+      self[:description] || variant.description
     end
 
     private

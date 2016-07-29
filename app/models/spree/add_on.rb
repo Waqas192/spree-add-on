@@ -4,7 +4,8 @@ class Spree::AddOn < ActiveRecord::Base
   has_one(
     :default_price, -> { where(currency: Spree::Config[:currency]) },
     class_name: "Spree::AddOnPrice",
-    dependent: :destroy)
+    dependent: :destroy
+  )
   delegate_belongs_to :default_price, :display_amount, :price=, :currency
 
   has_many :prices,
@@ -17,7 +18,7 @@ class Spree::AddOn < ActiveRecord::Base
   scope :default, -> { where(default: true) }
 
   def price_in(currency)
-    prices.where(currency: currency).first ||
+    prices.find_by_currency(currency) ||
       self.build_default_price(currency: currency)
   end
 
@@ -29,9 +30,11 @@ class Spree::AddOn < ActiveRecord::Base
     self.human_attribute_name(:type_description)
   end
 
+  # rubocop:disable Metrics/LineLength
   def display_name
     "#{self.name} #{I18n.t('spree.addons.expires_in', count: self.expiration_days) if self.expiration_days}".strip
   end
+  # rubocop:enable Metrics/LineLength
 
   def purchased!(line_item)
     # Do nothing.

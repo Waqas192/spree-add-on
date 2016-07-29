@@ -40,6 +40,9 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Max: 5
 
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
 Style/CollectionMethods:
   Description: Preferred collection methods.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#map-find-select-reduce-size
@@ -318,4 +321,7 @@ Lint/LiteralInCondition:
 
 Lint/LiteralInInterpolation:
   Description: Checks for literals used in interpolation.
+  Enabled: false
+
+Style/ClassAndModuleChildren:
   Enabled: false
