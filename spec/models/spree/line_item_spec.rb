@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "spec_helper"
 
-describe Spree::LineItem do
+describe Spree::LineItem, type: :model do
 
   it { should have_many(:line_item_add_ons).dependent(:destroy) }
   it { should have_many(:add_ons).through(:line_item_add_ons) }
@@ -59,6 +59,6 @@ describe Spree::LineItem do
       line_item.stub(single_money: money)
     end
 
-    its(:price_with_add_ons_unchanged?) { should be_true }
+    its(:price_with_add_ons_unchanged?) { should be true }
   end
 end

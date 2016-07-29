@@ -1,25 +1,25 @@
 class Spree::AddOn < ActiveRecord::Base
-  attr_accessible :description, :name, :type, :default, :prices_attributes,
-    :expiration_days
-  belongs_to :product, class_name: 'Spree::Product'
+  belongs_to :product, class_name: "Spree::Product"
 
-  has_one :default_price,
-    class_name: 'Spree::AddOnPrice',
-    conditions: {currency: Spree::Config[:currency]},
+  has_one(
+    :default_price, -> { where(currency: Spree::Config[:currency]) },
+    class_name: "Spree::AddOnPrice",
     dependent: :destroy
+  )
   delegate_belongs_to :default_price, :display_amount, :price=, :currency
 
   has_many :prices,
-    class_name: 'Spree::AddOnPrice',
-    dependent: :destroy,
-    inverse_of: :add_on
+           class_name: "Spree::AddOnPrice",
+           dependent: :destroy,
+           inverse_of: :add_on
 
   accepts_nested_attributes_for :prices, allow_destroy: true
 
   scope :default, -> { where(default: true) }
 
   def price_in(currency)
-    prices.where(currency: currency).first || self.build_default_price(currency: currency)
+    prices.find_by_currency(currency) ||
+      self.build_default_price(currency: currency)
   end
 
   def self.types
@@ -30,9 +30,11 @@ class Spree::AddOn < ActiveRecord::Base
     self.human_attribute_name(:type_description)
   end
 
+  # rubocop:disable Metrics/LineLength
   def display_name
     "#{self.name} #{I18n.t('spree.addons.expires_in', count: self.expiration_days) if self.expiration_days}".strip
   end
+  # rubocop:enable Metrics/LineLength
 
   def purchased!(line_item)
     # Do nothing.

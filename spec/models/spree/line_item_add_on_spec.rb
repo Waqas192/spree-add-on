@@ -1,6 +1,6 @@
-require 'spec_helper'
+require "spec_helper"
 
-describe Spree::LineItemAddOn do
+describe Spree::LineItemAddOn, type: :model do
   let(:add_on) { stub_model Spree::AddOn, expiration_days: expiration_date }
 
   it { should belong_to :add_on }
@@ -9,7 +9,7 @@ describe Spree::LineItemAddOn do
   it { should_not allow_value(nil).for(:add_on) }
   it { should_not allow_value(nil).for(:line_item) }
 
-  describe 'after_create' do
+  describe "after_create" do
     let(:line_item) { create :line_item }
     let(:add_on) { create :add_on, expiration_days: expiration_days, price: add_on_cost }
     let(:add_on_cost) { 1.23 }
@@ -24,12 +24,12 @@ describe Spree::LineItemAddOn do
 
     its(:price) { should == add_on_cost }
     its(:money) { should == Spree::Money.new( add_on_cost, currency: line_item.order.currency ) }
-    it 'has the correct expiry date' do
+    it "has the correct expiry date" do
       expect ( subject.expiration_date.to_date ) == (Date.current + expiration_days.days)
     end
   end
 
-  describe '#expired?' do
+  describe "#expired?" do
     let(:line_item_addon) { stub_model Spree::LineItemAddOn, add_on: add_on, created_at: created_at }
 
     subject { line_item_addon }
@@ -56,7 +56,7 @@ describe Spree::LineItemAddOn do
     end
   end
 
-  describe '#purchased!' do
+  describe "#purchased!" do
     let(:line_item_add_on) { Spree::LineItemAddOn.new }
 
     let(:add_on) { stub_model Spree::AddOn }
@@ -67,7 +67,7 @@ describe Spree::LineItemAddOn do
       line_item_add_on.line_item = line_item
     end
 
-    it 'should call purchased! on the add on' do
+    it "should call purchased! on the add on" do
       expect(add_on).to receive(:purchased!).with(line_item)
       line_item_add_on.purchased!
     end

@@ -3,7 +3,7 @@ FactoryGirl.define do
     price 4.99
     sequence(:name) { |n| "AddOn ##{n} - #{Kernel.rand(9999)}" }
     expiration_days 30
-    description { Faker::Lorem.paragraphs(1) }
+    description { FFaker::Lorem.paragraphs(1) }
     association :product
   end
 end
