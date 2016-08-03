@@ -25,17 +25,28 @@ require "shoulda/matchers"
 Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each { |f| require f }
 
 # Requires factories defined in spree_core
-require "spree/testing_support/factories"
 require "spree/testing_support/controller_requests"
 require "spree/testing_support/authorization_helpers"
 require "spree/testing_support/url_helpers"
+require "spree/testing_support/factories"
+require "spree/testing_support/preferences"
 
+require "spree/api/testing_support/caching"
+require "spree/api/testing_support/helpers"
+require "spree/api/testing_support/setup"
 # Find any extension definitions.
 FactoryGirl.find_definitions
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
+  config.include Spree::Api::TestingSupport::Helpers, type: :controller
+  config.extend Spree::Api::TestingSupport::Setup, type: :controller
+  config.include Spree::TestingSupport::Preferences, type: :controller
   config.infer_spec_type_from_file_location!
+  config.before do
+    Spree::Api::Config[:requires_authentication] = true
+  end
+
   # == URL Helpers
   #
   # Allows access to Spree"s routes in specs:
@@ -54,7 +65,7 @@ RSpec.configure do |config|
   config.mock_with :rspec
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  # config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   # Capybara javascript drivers require transactional fixtures set to false,
   # and we use DatabaseCleaner to cleanup after each test instead.  Without
