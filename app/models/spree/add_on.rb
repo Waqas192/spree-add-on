@@ -7,12 +7,6 @@ class Spree::AddOn < ActiveRecord::Base
     dependent: :destroy
   )
   
-  delegate_attributes :to => :default_price
-  delegate_attributes :to => :display_amount
-  delegate_attributes :to => :price=
-  delegate_attributes :to => :currency
-  
-
   has_many :prices,
            class_name: "Spree::AddOnPrice",
            dependent: :destroy,
