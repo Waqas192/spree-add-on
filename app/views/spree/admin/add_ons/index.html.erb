@@ -31,7 +31,7 @@
         ) do %>
           <td class='align-center'><%= add_on.name %></td>
           <td class='align-center'><%= add_on.description %></td>
-          <td class='align-center'><%= add_on.display_amount %></td>
+          <td class='align-center'><%= add_on.price_in(current_currency).amount.to_i %></td>
           <td class='align-center'>
             <% if add_on.expiration_days %>
               <%= pluralize( add_on.expiration_days, 'day' ) %>
